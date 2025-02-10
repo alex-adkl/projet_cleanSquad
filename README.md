@@ -1,1 +1,1 @@
-# clean-squad
+# Projet CleanSquad
