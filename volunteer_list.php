@@ -55,28 +55,14 @@ include "config.php";
                 </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-300">
-                <tr class="hover:bg-gray-100 transition duration-200">
-                    <td class="py-3 px-4">Nom du bénévole</td>
-                    <td class="py-3 px-4">email@example.com</td>
-                    <td class="py-3 px-4">Admin</td>
-                    <td class="py-3 px-4 flex space-x-2">
-                        <a href="volunteer_edit.php"
-                           class="bg-cyan-500 hover:bg-cyan-600 text-white px-4 py-2 rounded-lg shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200">
-                            ✏️ Modifier
-                        </a>
-                        <a href="#"
-                           class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg shadow-lg focus:outline-none focus:ring-2 focus:ring-red-500 transition duration-200">
-                            🗑️ Supprimer
-                        </a>
-                    </td>
-                </tr>
+                
                 <?php
 $sql = "SELECT * FROM benevoles";
 $stmt = $pdo->query($sql);
 $users = $stmt->fetchAll(PDO::FETCH_ASSOC); // On stocke les résultats dans $users
 
-foreach ($users as $benevole) { // Boucle sur $users et non $benevoles
-    $nom = htmlspecialchars($benevole['nom']); // Échappement pour éviter les failles XSS
+foreach ($users as $benevole) { 
+    $nom = htmlspecialchars($benevole['nom']); 
     $email = htmlspecialchars($benevole['email']);
     $role = htmlspecialchars($benevole['role']);
 
