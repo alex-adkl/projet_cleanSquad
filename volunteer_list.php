@@ -1,3 +1,9 @@
+<?php
+
+include "config.php";
+?>
+
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -10,7 +16,7 @@
 <body class="bg-gray-100 text-gray-900">
 <div class="flex h-screen">
     <!-- Barre de navigation -->
-    <div class="bg-cyan-200 text-white w-64 p-6">
+    <div class="bg-cyan-500 text-white w-64 p-6">
         <h2 class="text-2xl font-bold mb-6">Dashboard</h2>
             <li><a href="collection_list.php" class="flex items-center py-2 px-3 hover:bg-blue-800 rounded-lg"><i
                             class="fas fa-tachometer-alt mr-3"></i> Tableau de bord</a></li>
@@ -54,8 +60,8 @@
                     <td class="py-3 px-4">email@example.com</td>
                     <td class="py-3 px-4">Admin</td>
                     <td class="py-3 px-4 flex space-x-2">
-                        <a href="#"
-                           class="bg-cyan-200 hover:bg-cyan-600 text-white px-4 py-2 rounded-lg shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200">
+                        <a href="volunteer_edit.php"
+                           class="bg-cyan-500 hover:bg-cyan-600 text-white px-4 py-2 rounded-lg shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200">
                             ✏️ Modifier
                         </a>
                         <a href="#"
@@ -64,6 +70,34 @@
                         </a>
                     </td>
                 </tr>
+                <?php
+$sql = "SELECT * FROM benevoles";
+$stmt = $pdo->query($sql);
+$users = $stmt->fetchAll(PDO::FETCH_ASSOC); // On stocke les résultats dans $users
+
+foreach ($users as $benevole) { // Boucle sur $users et non $benevoles
+    $nom = htmlspecialchars($benevole['nom']); // Échappement pour éviter les failles XSS
+    $email = htmlspecialchars($benevole['email']);
+    $role = htmlspecialchars($benevole['role']);
+
+    echo "<tr class='hover:bg-gray-100 transition duration-200'>
+        <td class='py-3 px-4'>$nom</td>
+        <td class='py-3 px-4'>$email</td>
+        <td class='py-3 px-4'>$role</td>
+        <td class='py-3 px-4 flex space-x-2'>
+            <a href='volunteer_edit.php?id={$benevole['id']}'
+                class='bg-cyan-500 hover:bg-cyan-600 text-white px-4 py-2 rounded-lg shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200'>
+                ✏️ Modifier
+            </a>
+            <a href='volunteer_delete.php?id={$benevole['id']}'
+                class='bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg shadow-lg focus:outline-none focus:ring-2 focus:ring-red-500 transition duration-200'
+                onclick=\"return confirm('Voulez-vous vraiment supprimer ce bénévole ?');\">
+                🗑️ Supprimer
+            </a>
+        </td>
+    </tr>";
+}
+?>
                 </tbody>
             </table>
         </div>
