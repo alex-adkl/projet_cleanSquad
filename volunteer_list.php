@@ -1,8 +1,6 @@
 <?php
-
-include "config.php";
+    include "config.php";
 ?>
-
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -51,25 +49,37 @@ include "config.php";
                     <th class="py-3 px-4 text-left">Nom</th>
                     <th class="py-3 px-4 text-left">Email</th>
                     <th class="py-3 px-4 text-left">Rôle</th>
+                    <th class="py-3 px-4 text-left">Nombre total de déchêts collectés</th>
                     <th class="py-3 px-4 text-left">Actions</th>
                 </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-300">
                 
                 <?php
-$sql = "SELECT * FROM benevoles";
-$stmt = $pdo->query($sql);
-$users = $stmt->fetchAll(PDO::FETCH_ASSOC); // On stocke les résultats dans $users
+$sql = "SELECT benevoles.id, benevoles.nom, benevoles.email, benevoles.role, 
+        SUM(dechets_collectes.quantite_kg) AS total_dechets
+        FROM benevoles
+        LEFT JOIN collectes ON benevoles.id = collectes.id_benevole
+        LEFT JOIN dechets_collectes ON collectes.id = dechets_collectes.id_collecte
+        GROUP BY benevoles.id, benevoles.nom, benevoles.email, benevoles.role";
 
+        $stmt = $pdo->query($sql);
+        $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+// boucle sur chaque benevole récupéré 
 foreach ($users as $benevole) { 
-    $nom = htmlspecialchars($benevole['nom']); 
-    $email = htmlspecialchars($benevole['email']);
-    $role = htmlspecialchars($benevole['role']);
+        $nom = htmlspecialchars($benevole['nom']); 
+        $email = htmlspecialchars($benevole['email']);
+        $role = htmlspecialchars($benevole['role']);
 
-    echo "<tr class='hover:bg-gray-100 transition duration-200'>
+// Vérifie si total_dechets est NULL et remplace par 0 si c'est le cas > sinon ERREUR
+$total_dechets = $benevole['total_dechets'] !== null ? number_format($benevole['total_dechets'], 2) : "0.00"; 
+
+echo "<tr class='hover:bg-gray-100 transition duration-200'>
         <td class='py-3 px-4'>$nom</td>
         <td class='py-3 px-4'>$email</td>
         <td class='py-3 px-4'>$role</td>
+        <td class='py-3 px-4'>$total_dechets kg</td>
         <td class='py-3 px-4 flex space-x-2'>
             <a href='volunteer_edit.php?id={$benevole['id']}'
                 class='bg-cyan-500 hover:bg-cyan-600 text-white px-4 py-2 rounded-lg shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200'>
