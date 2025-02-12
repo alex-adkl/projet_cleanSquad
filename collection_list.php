@@ -8,7 +8,8 @@ try {
         LEFT JOIN benevoles b ON c.id_benevole = b.id
         ORDER BY c.date_collecte DESC
     ");
-
+    // ICI RECUPERER AJOUTER LES QUANTITES PAR TYPE 
+    // On prepare on execute 
     $query = $pdo->prepare("SELECT nom FROM benevoles WHERE role = 'admin' LIMIT 1");
     $query->execute();
 
@@ -20,7 +21,7 @@ try {
     echo "Erreur de base de données : " . $e->getMessage();
     exit;
 }
-
+// Voir si suprimable ou l'utilité
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);

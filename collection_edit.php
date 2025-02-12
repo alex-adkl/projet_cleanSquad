@@ -24,7 +24,7 @@ $stmt_benevoles = $pdo->prepare("SELECT id, nom FROM benevoles ORDER BY nom");
 $stmt_benevoles->execute();
 $benevoles = $stmt_benevoles->fetchAll();
 
-// on met à jour la collecte
+// Mise a jour collecte
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if (isset($_POST["date"], $_POST["lieu"], $_POST["benevole"])) {
         $date = $_POST["date"];
@@ -36,7 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         header("Location: collection_list.php");
         exit;
     }
-
+        // Insertion des dechets dans table 
     if (isset($_POST["type_dechet"], $_POST["quantite_kg"])) {
         $type_dechet = $_POST["type_dechet"];
         $quantite_kg = $_POST["quantite_kg"];
@@ -111,7 +111,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 <label for="type_dechet">Type de déchet :</label>
                 <select name="type_dechet" id="type_dechet" required>
                     <option value="" disabled selected>Choisissez</option>
-                    <!-- <option value="">--Choisissez--</option> -->
+                    <!-- Option Value (menu deroulant html) -->
                     <option value="plastique">plastique</option>
                     <option value="verre">verre</option>
                     <option value="metal">métal</option>
@@ -128,23 +128,3 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 </body>
 </html>
-
-
-                    <!-- https://www.conseil-webmaster.com/formation/php/09-variables-post-php.php#envoyer_post -->
-<!-- <form method="POST">
-    <label>Type de déchet :</label>
-    <input type="text" name="type_dechet">
-    <label>Quantité (kg) :</label>
-    <input type="number" name="quantite_kg" step="0.1"> -->
-    <!-- https://developer.mozilla.org/fr/docs/Web/HTML/Attributes/step -->
-    <!-- <button type="submit">Ajouter</button>
-</form> -->
-                    <!-- https://www.conseil-webmaster.com/formation/php/09-variables-post-php.php#envoyer_post -->
-<!-- <form method="POST">
-    <label>Type de déchet :</label>
-    <input type="text" name="type_dechet">
-    <label>Quantité (kg) :</label>
-    <input type="number" name="quantite_kg" step="0.1"> -->
-    <!-- https://developer.mozilla.org/fr/docs/Web/HTML/Attributes/step -->
-    <!-- <button type="submit">Ajouter</button>
-</form> -->

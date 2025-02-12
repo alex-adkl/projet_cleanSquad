@@ -56,13 +56,14 @@
                 <tbody class="divide-y divide-gray-300">
                 
                 <?php
+// SUM de quantité total  par BENEVOLE 
 $sql = "SELECT benevoles.id, benevoles.nom, benevoles.email, benevoles.role, 
         SUM(dechets_collectes.quantite_kg) AS total_dechets
         FROM benevoles
         LEFT JOIN collectes ON benevoles.id = collectes.id_benevole
         LEFT JOIN dechets_collectes ON collectes.id = dechets_collectes.id_collecte
         GROUP BY benevoles.id, benevoles.nom, benevoles.email, benevoles.role";
-
+// Recupere + Fetch dans users 
         $stmt = $pdo->query($sql);
         $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
