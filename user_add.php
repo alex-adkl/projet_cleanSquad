@@ -47,7 +47,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <div class="flex h-screen">
     <!-- Barre de navigation -->
-    <div class="bg-cyan-500 text-white w-64 p-6">L
+    <div class="bg-cyan-500 text-white w-64 p-6">
         <h2 class="text-2xl font-bold mb-6">Dashboard</h2>
 
             <li><a href="collection_list.php" class="flex items-center py-2 px-3 hover:bg-blue-800 rounded-lg"><i
@@ -58,7 +58,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             class="fa-solid fa-list mr-3"></i> Liste des bénévoles</a></li>
             <li><a href="my_account.php" class="flex items-center py-2 px-3 hover:bg-blue-800 rounded-lg"><i
                             class="fas fa-cogs mr-3"></i> Mon compte</a></li>
-
         <div class="mt-6">
             <button onclick="logout()" class="w-full bg-red-600 hover:bg-red-700 text-white py-2 rounded-lg shadow-md">
                 Déconnexion

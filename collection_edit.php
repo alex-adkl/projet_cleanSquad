@@ -1,6 +1,7 @@
 <?php
 require 'config.php';
 
+// on vérifie si un ID de collecte est fourni
 if (!isset($_GET['id']) || empty($_GET['id'])) {
     header("Location: collection_list.php");
     exit;
@@ -8,6 +9,7 @@ if (!isset($_GET['id']) || empty($_GET['id'])) {
 
 $id = $_GET['id'];
 
+// on récupère les informations de la collecte
 $stmt = $pdo->prepare("SELECT * FROM collectes WHERE id = ?");
 $stmt->execute([$id]);
 $collecte = $stmt->fetch();
@@ -17,10 +19,12 @@ if (!$collecte) {
     exit;
 }
 
+// on récupère la liste des bénévoles
 $stmt_benevoles = $pdo->prepare("SELECT id, nom FROM benevoles ORDER BY nom");
 $stmt_benevoles->execute();
 $benevoles = $stmt_benevoles->fetchAll();
 
+// on met à jour la collecte
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if (isset($_POST["date"], $_POST["lieu"], $_POST["benevole"])) {
         $date = $_POST["date"];
@@ -56,14 +60,20 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <div class="flex h-screen">
     <div class="bg-cyan-500 text-white w-64 p-6">
         <h2 class="text-2xl font-bold mb-6">Dashboard</h2>
-        <ul>
-            <li><a href="collection_list.php" class="flex items-center py-2 px-3 hover:bg-blue-800 rounded-lg">📊 Tableau de bord</a></li>
-            <li><a href="volunteer_list.php" class="flex items-center py-2 px-3 hover:bg-blue-800 rounded-lg">👥 Liste des bénévoles</a></li>
-            <li><a href="user_add.php" class="flex items-center py-2 px-3 hover:bg-blue-800 rounded-lg">➕ Ajouter un bénévole</a></li>
-            <li><a href="my_account.php" class="flex items-center py-2 px-3 hover:bg-blue-800 rounded-lg">⚙️ Mon compte</a></li>
-        </ul>
+
+            <li><a href="collection_list.php" class="flex items-center py-2 px-3 hover:bg-blue-800 rounded-lg"><i
+                            class="fas fa-tachometer-alt mr-3"></i> Tableau de bord</a></li>
+            <li><a href="volunteer_list.php" class="flex items-center py-2 px-3 hover:bg-blue-800 rounded-lg"><i
+                            class="fa-solid fa-list mr-3"></i> Liste des bénévoles</a></li>
+            <li><a href="user_add.php" class="flex items-center py-2 px-3 hover:bg-blue-800 rounded-lg"><i
+                            class="fas fa-plus-circle mr-3"></i> Ajouter un bénévole</a></li>
+            <li><a href="my_account.php" class="flex items-center py-2 px-3 hover:bg-blue-800 rounded-lg"><i
+                            class="fas fa-cogs mr-3"></i> Mon compte</a></li>
+
         <div class="mt-6">
-            <button onclick="logout()" class="w-full bg-red-600 hover:bg-red-700 text-white py-2 rounded-lg shadow-md">Déconnexion</button>
+            <button onclick="logout()" class="w-full bg-red-600 hover:bg-red-700 text-white py-2 rounded-lg shadow-md">
+                Déconnexion
+            </button>
         </div>
     </div>
 
@@ -100,7 +110,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             <form method="POST">
                 <label for="type_dechet">Type de déchet :</label>
                 <select name="type_dechet" id="type_dechet" required>
-                    <option value="">--Choisissez--</option>
+                    <option value="" disabled selected>Choisissez</option>
+                    <!-- <option value="">--Choisissez--</option> -->
                     <option value="plastique">plastique</option>
                     <option value="verre">verre</option>
                     <option value="metal">métal</option>
