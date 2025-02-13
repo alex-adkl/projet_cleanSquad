@@ -69,10 +69,15 @@ error_reporting(E_ALL);
         <?php endif; ?>
 
         <!-- Cartes d'informations -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 lg:grid-cols-4 gap-6 mb-8">
             <!-- Nombre total de collectes -->
             <div class="bg-white p-6 rounded-lg shadow-lg">
                 <h3 class="text-xl font-semibold text-gray-800 mb-3">Total des Collectes</h3>
+                <p class="text-3xl font-bold text-blue-600"><?= count($collectes) ?></p>
+            </div>
+             <!-- Nombre total de dechets collectés -->
+             <div class="bg-white p-6 rounded-lg shadow-lg">
+                <h3 class="text-xl font-semibold text-gray-800 mb-3">Total des déchêts collectés</h3>
                 <p class="text-3xl font-bold text-blue-600"><?= count($collectes) ?></p>
             </div>
             <!-- Dernière collecte -->
