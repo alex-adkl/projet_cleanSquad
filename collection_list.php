@@ -24,6 +24,11 @@ try {
     $admin = $query->fetch(PDO::FETCH_ASSOC);
     $adminNom = $admin ? htmlspecialchars($admin['nom']) : 'Aucun administrateur trouvé';
 
+    $totalDechets = 0;
+    foreach ($collectes as $collecte) {
+        $totalDechets += $collecte['total'];
+    }
+
 } catch (PDOException $e) {
     echo "Erreur de base de données : " . $e->getMessage();
     exit;
@@ -85,7 +90,7 @@ error_reporting(E_ALL);
              <!-- Nombre total de dechets collectés -->
              <div class="bg-white p-6 rounded-lg shadow-lg">
                 <h3 class="text-xl font-semibold text-gray-800 mb-3">Total des déchêts collectés</h3>
-                <p class="text-3xl font-bold text-blue-600"><?= count($collectes) ?> kg</p>
+                <p class="text-3xl font-bold text-blue-600"><?= number_format((float)$totalDechets, 2, '.', '')?> kg</p>
             </div>
             <!-- Dernière collecte -->
             <div class="bg-white p-6 rounded-lg shadow-lg">
@@ -128,7 +133,7 @@ error_reporting(E_ALL);
                         <td class="py-3 px-4"><?= number_format((float)$collecte['metal'], 2, '.', '')?> kg</td>
                         <td class="py-3 px-4"><?= number_format((float)$collecte['organiques'], 2, '.', '')?> kg</td>
                         <td class="py-3 px-4"><?= number_format((float)$collecte['papier'], 2, '.', '')?> kg</td>
-                        <td class="py-3 px-4"><?= isset($collecte['total']) ? number_format($collecte['total'], 2) : '0.00' ?> kg</td>                        
+                        <td class="py-3 px-4"><?= number_format((float)$collecte['total'], 2, '.', '')?> kg</td>                        
                         <td class="py-3 px-4 flex space-x-2">
                             <a href="collection_edit.php?id=<?= $collecte['id'] ?>" class="bg-cyan-500 hover:bg-cyan-600 text-white px-4 py-2 rounded-lg shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200">
                                 ✏️ Modifier
