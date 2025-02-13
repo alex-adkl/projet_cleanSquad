@@ -3,17 +3,24 @@ require 'config.php';
 
 try {
     $stmt = $pdo->query("
-        SELECT c.id, c.date_collecte, c.lieu, b.nom
+        SELECT c.id, c.date_collecte, c.lieu, b.nom AS benevole,
+                SUM(d.quantite_kg) AS total,
+                SUM(d.quantite_kg * (d.type_dechet = 'plastique')) AS plastique,
+                SUM(d.quantite_kg * (d.type_dechet = 'verre')) AS verre,
+                SUM(d.quantite_kg * (d.type_dechet = 'métal')) AS metal,
+                SUM(d.quantite_kg * (d.type_dechet = 'organique')) AS organiques,
+                SUM(d.quantite_kg * (d.type_dechet = 'papier')) AS papier
         FROM collectes c
         LEFT JOIN benevoles b ON c.id_benevole = b.id
-        ORDER BY c.date_collecte DESC
+        LEFT JOIN dechets_collectes d ON d.id_collecte = c.id
+        GROUP BY c.id, c.date_collecte, c.lieu, b.nom
+        ORDER BY c.date_collecte DESC;
     ");
-    // ICI RECUPERER AJOUTER LES QUANTITES PAR TYPE 
-    // On prepare on execute 
+
     $query = $pdo->prepare("SELECT nom FROM benevoles WHERE role = 'admin' LIMIT 1");
     $query->execute();
 
-    $collectes = $stmt->fetchAll();
+    $collectes = $stmt->fetchAll(PDO::FETCH_ASSOC);
     $admin = $query->fetch(PDO::FETCH_ASSOC);
     $adminNom = $admin ? htmlspecialchars($admin['nom']) : 'Aucun administrateur trouvé';
 
@@ -21,7 +28,7 @@ try {
     echo "Erreur de base de données : " . $e->getMessage();
     exit;
 }
-// Voir si suprimable ou l'utilité
+
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
@@ -78,7 +85,7 @@ error_reporting(E_ALL);
              <!-- Nombre total de dechets collectés -->
              <div class="bg-white p-6 rounded-lg shadow-lg">
                 <h3 class="text-xl font-semibold text-gray-800 mb-3">Total des déchêts collectés</h3>
-                <p class="text-3xl font-bold text-blue-600"><?= count($collectes) ?></p>
+                <p class="text-3xl font-bold text-blue-600"><?= count($collectes) ?> kg</p>
             </div>
             <!-- Dernière collecte -->
             <div class="bg-white p-6 rounded-lg shadow-lg">
@@ -115,15 +122,13 @@ error_reporting(E_ALL);
                     <tr class="hover:bg-gray-100 transition duration-200">
                         <td class="py-3 px-4"><?= date('d/m/Y', strtotime($collecte['date_collecte'])) ?></td>
                         <td class="py-3 px-4"><?= htmlspecialchars($collecte['lieu']) ?></td>
-                        <td class="py-3 px-4">
-                            <?= $collecte['nom'] ? htmlspecialchars($collecte['nom']) : 'Aucun bénévole' ?>
-                        </td>
-                        <td class="py-3 px-4">0.00 kg</td>
-                        <td class="py-3 px-4">0.00 kg</td>
-                        <td class="py-3 px-4">0.00 kg</td>
-                        <td class="py-3 px-4">0.00 kg</td>
-                        <td class="py-3 px-4">0.00 kg</td>
-                        <td class="py-3 px-4">0.00 kg</td>
+                        <td class="py-3 px-4"><?= $collecte['benevole'] ? htmlspecialchars($collecte['benevole']) : 'Aucun bénévole' ?></td>
+                        <td class="py-3 px-4"><?= number_format((float)$collecte['plastique'], 2, '.', '')?> kg</td>
+                        <td class="py-3 px-4"><?= number_format((float)$collecte['verre'], 2, '.', '')?> kg</td>
+                        <td class="py-3 px-4"><?= number_format((float)$collecte['metal'], 2, '.', '')?> kg</td>
+                        <td class="py-3 px-4"><?= number_format((float)$collecte['organiques'], 2, '.', '')?> kg</td>
+                        <td class="py-3 px-4"><?= number_format((float)$collecte['papier'], 2, '.', '')?> kg</td>
+                        <td class="py-3 px-4"><?= isset($collecte['total']) ? number_format($collecte['total'], 2) : '0.00' ?> kg</td>                        
                         <td class="py-3 px-4 flex space-x-2">
                             <a href="collection_edit.php?id=<?= $collecte['id'] ?>" class="bg-cyan-500 hover:bg-cyan-600 text-white px-4 py-2 rounded-lg shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200">
                                 ✏️ Modifier
