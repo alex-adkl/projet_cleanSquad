@@ -4,7 +4,7 @@ require 'config.php';
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
-// Récupérer la liste des bénévoles
+// on récupère la liste des bénévoles
 $stmt_benevoles = $pdo->query("SELECT id, nom FROM benevoles ORDER BY nom");
 $stmt_benevoles->execute();
 $benevoles = $stmt_benevoles->fetchAll();
@@ -12,12 +12,24 @@ $benevoles = $stmt_benevoles->fetchAll();
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $date = $_POST["date"];
     $lieu = $_POST["lieu"];
-    $benevole_id = $_POST["benevole"];  // ID du bénévole choisi, modifié ici pour correspondre au formulaire
+    $benevole_id = $_POST["benevole"];  
 
-    // Insérer la collecte avec le bénévole sélectionné
+    // on insère la collecte dans la table collecte avec le bénévole sélectionné
     $stmt = $pdo->prepare("INSERT INTO collectes (date_collecte, lieu, id_benevole) VALUES (?, ?, ?)");
     if (!$stmt->execute([$date, $lieu, $benevole_id])) {
         die('Erreur lors de l\'insertion dans la base de données.');
+    }
+
+    // Insertion des déchets
+    if (!empty($_POST["type_dechet"]) && !empty($_POST["quantite_kg"])) {
+        $stmt_dechets = $pdo->prepare("INSERT INTO dechets_collectes (id_collecte, type_dechet, quantite_kg) VALUES (?, ?, ?)");
+        $id_collecte = $pdo->lastInsertId();
+        foreach ($_POST["type_dechet"] as $index => $type) {
+            $quantite = $_POST["quantite_kg"][$index];
+            if (!empty($type) && is_numeric($quantite) && $quantite > 0) {
+                $stmt_dechets->execute([$id_collecte, $type, $quantite]);
+            }
+        }
     }
 
     header("Location: collection_list.php");
@@ -40,14 +52,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <div class="bg-cyan-200 text-white w-64 p-6">
         <h2 class="text-2xl font-bold mb-6">Dashboard</h2>
 
-            <li><a href="collection_list.php" class="flex items-center py-2 px-3 hover:bg-blue-800 rounded-lg"><i class="fas fa-tachometer-alt mr-3"></i> Tableau de bord</a></li>
-            <li><a href="volunteer_list.php" class="flex items-center py-2 px-3 hover:bg-blue-800 rounded-lg"><i class="fa-solid fa-list mr-3"></i> Liste des bénévoles</a></li>
-            <li>
-                <a href="user_add.php" class="flex items-center py-2 px-3 hover:bg-blue-800 rounded-lg">
-                    <i class="fas fa-user-plus mr-3"></i> Ajouter un bénévole
-                </a>
-            </li>
-            <li><a href="my_account.php" class="flex items-center py-2 px-3 hover:bg-blue-800 rounded-lg"><i class="fas fa-cogs mr-3"></i> Mon compte</a></li>
+        <li><a href="collection_list.php" class="flex items-center py-2 px-3 hover:bg-blue-800 rounded-lg"><i class="fas fa-tachometer-alt mr-3"></i> Tableau de bord</a></li>
+        <li><a href="volunteer_list.php" class="flex items-center py-2 px-3 hover:bg-blue-800 rounded-lg"><i class="fa-solid fa-list mr-3"></i> Liste des bénévoles</a></li>
+        <li>
+            <a href="user_add.php" class="flex items-center py-2 px-3 hover:bg-blue-800 rounded-lg">
+                <i class="fas fa-user-plus mr-3"></i> Ajouter un bénévole
+            </a>
+        </li>
+        <li><a href="my_account.php" class="flex items-center py-2 px-3 hover:bg-blue-800 rounded-lg"><i class="fas fa-cogs mr-3"></i> Mon compte</a></li>
 
         <div class="mt-6">
             <button onclick="logout()" class="w-full bg-red-600 hover:bg-red-700 text-white py-2 rounded-lg shadow-md">
@@ -92,6 +104,19 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     </select>
                 </div>  
                 
+                <h2 class="text-lg font-bold mt-4">Déchets à ajouter</h2>
+                <div id="dechets-container">
+                    <?php
+                    $types_dechets = ['plastique', 'verre', 'metal', 'organique', 'papier'];
+                    foreach ($types_dechets as $type_dechet) :
+                    ?>
+                        <div class="flex space-x-4 mb-2">
+                            <label class="w-32 text-sm font-medium text-gray-700"><?= ucfirst($type_dechet) ?> :</label>
+                            <input type="number" name="quantite_kg[]" value="" class="p-2 border border-gray-300 rounded-lg" placeholder="Quantité" step="0.1" min="0" max="99" required>
+                            <input type="hidden" name="type_dechet[]" value="<?= $type_dechet ?>">
+                        </div>
+                    <?php endforeach; ?>
+                </div>
 
                 <!-- Boutons -->
                 <div class="flex justify-end space-x-4">
@@ -102,24 +127,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 </div>
             </form>
         </div>
-        <div class="bg-white p-6 rounded-lg shadow-lg mt-6">
-            <form method="POST">
-                <label for="type_dechet">Type de déchet :</label>
-                <select name="type_dechet" id="type_dechet" required>
-                    <option value="" disabled selected>Choisissez</option>
-                    <!-- <option value="">--Choisissez--</option> -->
-                    <option value="plastique">plastique</option>
-                    <option value="verre">verre</option>
-                    <option value="metal">métal</option>
-                    <option value="organique">organique</option>
-                    <option value="papier">papier</option>
-                </select>
-                <label for="quantite_kg">Poids (kg) :</label>
-                <input type="number" id="quantite_kg" name="quantite_kg" placeholder="1.0" step="0.1" min="0" max="99" required />
-                <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded-lg">Ajouter</button>
-            </form>
-        </div>
-
     </div>
 </div>
 
