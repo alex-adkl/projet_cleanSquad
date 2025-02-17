@@ -68,34 +68,30 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 </head>
 <body class="bg-gray-100 text-gray-900">
 <div class="flex h-screen">
-    <div class="bg-cyan-500 text-white w-64 p-6">
-        <h2 class="text-2xl font-bold mb-6">Dashboard</h2>
-        <li><a href="collection_list.php" class="flex items-center py-2 px-3 hover:bg-blue-800 rounded-lg">Tableau de bord</a></li>
-        <li><a href="volunteer_list.php" class="flex items-center py-2 px-3 hover:bg-blue-800 rounded-lg">Liste des bénévoles</a></li>
-        <li><a href="user_add.php" class="flex items-center py-2 px-3 hover:bg-blue-800 rounded-lg">Ajouter un bénévole</a></li>
-        <li><a href="my_account.php" class="flex items-center py-2 px-3 hover:bg-blue-800 rounded-lg">Mon compte</a></li>
-    </div>
+<?php 
+require('menu.php');
+?>
     <div class="flex-1 p-8 overflow-y-auto">
-        <h1 class="text-4xl font-bold text-blue-900 mb-6">Modifier une collecte</h1>
+        <h1 class="text-4xl font-bold text-sky-700 mb-6">Modifier une collecte</h1>
         <div class="bg-white p-6 rounded-lg shadow-lg">
             <form method="POST" class="space-y-4">
                 <div>
-                    <label class="block text-sm font-medium text-gray-700">Date :</label>
+                    <label class="block text-base font-medium text-gray-700">Date :</label>
                     <input type="date" name="date" value="<?= $collecte['date_collecte'] ?>" required class="w-full p-2 border border-gray-300 rounded-lg">
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700">Lieu :</label>
+                    <label class="block text-base font-medium text-gray-700">Lieu :</label>
                     <input type="text" name="lieu" value="<?= $collecte['lieu'] ?>" required class="w-full p-2 border border-gray-300 rounded-lg">
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700">Bénévole :</label>
+                    <label class="block text-base font-medium text-gray-700">Bénévole :</label>
                     <select name="benevole" required class="w-full p-2 border border-gray-300 rounded-lg">
                         <?php foreach ($benevoles as $benevole): ?>
                             <option value="<?= $benevole['id'] ?>" <?= $benevole['id'] == $collecte['id_benevole'] ? 'selected' : '' ?>><?= $benevole['nom'] ?></option>
                         <?php endforeach; ?>
                     </select>
                 </div>
-                <h2 class="text-lg font-bold mt-4">Déchets collectés</h2>
+                <h2 class="block text-base font-bold text-cyan-700">Déchêts collectés</h2>
                 <div id="dechets-container">
                     <?php
                     $types_dechets = ['plastique', 'verre', 'metal', 'organique', 'papier'];
@@ -109,15 +105,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                         }
                     ?>
                         <div class="flex space-x-4 mb-2">
-                            <label class="w-32 text-sm font-medium text-gray-700"><?= ucfirst($type_dechet) ?> :</label>
-                            <input type="number" name="quantite_kg[]" value="<?= $quantite ?>" class="p-2 border border-gray-300 rounded-lg" placeholder="Quantité" step="0.1" min="0" max="99">
+                            <label class="block text-base font-medium text-gray-700"><?= ucfirst($type_dechet) ?> (en kg) :</label>
+                            <input type="number" name="quantite_kg[]" value="<?= $quantite ?>" class="pr-2 pl-2 w-40 border border-gray-300 rounded-lg" placeholder="Quantité en kg" step="0.1" min="0" max="99">
                             <input type="hidden" name="type_dechet[]" value="<?= $type_dechet ?>">
                         </div>
                     <?php endforeach; ?>
                 </div>
-                <a href="collection_list.php" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg shadow">Annuler</a>
-                <button type="submit" class="bg-cyan-500 text-white px-4 py-2 rounded-lg">Modifier</button>
-               
+                <div class="flex justify-end space-x-4">
+                    <button href="collection_list.php" class="bg-gray-500 hover:bg-gray-700 text-white px-4 py-2 rounded-xl shadow focus:outline-none focus:ring-2 focus:ring-gray-700 transition duration-200">Annuler</button>
+                    <button type="submit" class="bg-cyan-500 hover:bg-cyan-700 text-white px-4 py-2 rounded-xl shadow focus:outline-none focus:ring-2 focus:ring-cyan-700 transition duration-200">Confirmer les modifications</button>
+                </div>
             </form>
         </div>
     </div>

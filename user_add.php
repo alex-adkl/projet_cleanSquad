@@ -3,34 +3,7 @@
 include "config.php";
 include "hash_password.php";
 
-// Si requete serveur = POST : Récupération des données du formulaire
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $nom = $_POST['nom'];
-    $email = $_POST['email'];
-    $mot_de_passe_hash = hashPassword($_POST['mot_de_passe']);
-    $role = $_POST['role'];
 
-    try {
-        // Préparer la requête d'insertion dans la table 
-        $sql = "INSERT INTO benevoles (nom, email, mot_de_passe, role) 
-                VALUES (:nom, :email, :mot_de_passe, :role)";
-        
-        $stmt = $pdo->prepare($sql);
-
-        //  Lie un paramètre à un nom de variable spécifique
-        $stmt->bindParam(':nom', $nom);
-        $stmt->bindParam(':email', $email);
-        $stmt->bindParam(':mot_de_passe', $mot_de_passe_hash);
-        $stmt->bindParam(':role', $role);
-
-        // Exécution de la requête
-        $stmt->execute();
-
-        echo "<p>Le bénévole a été ajouté avec succès.</p>";
-    } catch (PDOException $e) {
-        echo "<p>Erreur : " . $e->getMessage() . "</p>";
-    }
-}
 ?>
 
 <!DOCTYPE html>
@@ -40,33 +13,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ajouter un Bénévole</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
 </head>
 <body class="bg-gray-100 text-gray-900">
 
 <div class="flex h-screen">
-    <!-- Barre de navigation -->
-    <div class="bg-cyan-500 text-white w-64 p-6">
-        <h2 class="text-2xl font-bold mb-6">Dashboard</h2>
-
-            <li><a href="collection_list.php" class="flex items-center py-2 px-3 hover:bg-blue-800 rounded-lg"><i
-                            class="fas fa-tachometer-alt mr-3"></i> Tableau de bord</a></li>
-            <li><a href="collection_add.php" class="flex items-center py-2 px-3 hover:bg-blue-800 rounded-lg"><i
-                            class="fas fa-plus-circle mr-3"></i> Ajouter une collecte</a></li>
-            <li><a href="volunteer_list.php" class="flex items-center py-2 px-3 hover:bg-blue-800 rounded-lg"><i
-                            class="fa-solid fa-list mr-3"></i> Liste des bénévoles</a></li>
-            <li><a href="my_account.php" class="flex items-center py-2 px-3 hover:bg-blue-800 rounded-lg"><i
-                            class="fas fa-cogs mr-3"></i> Mon compte</a></li>
-        <div class="mt-6">
-            <button onclick="logout()" class="w-full bg-red-600 hover:bg-red-700 text-white py-2 rounded-lg shadow-md">
-                Déconnexion
-            </button>
-        </div>
-    </div>
+<?php 
+require('menu.php');
+?>
 
     <!-- Contenu principal -->
     <div class="flex-1 p-8 overflow-y-auto">
-        <h1 class="text-4xl font-bold text-blue-800 mb-6">Ajouter un Bénévole</h1>
+        <h1 class="text-4xl font-bold text-sky-700 mb-6">Ajouter un Bénévole</h1>
 
         <!-- Formulaire d'ajout -->
         <div class="bg-white p-6 rounded-lg shadow-lg max-w-lg mx-auto">
@@ -107,6 +64,36 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         Ajouter le bénévole
                     </button>
                 </div>
+                <?php
+// Si requete serveur = POST : Récupération des données du formulaire
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $nom = $_POST['nom'];
+    $email = $_POST['email'];
+    $mot_de_passe_hash = hashPassword($_POST['mot_de_passe']);
+    $role = $_POST['role'];
+
+    try {
+        // Préparer la requête d'insertion dans la table 
+        $sql = "INSERT INTO benevoles (nom, email, mot_de_passe, role) 
+                VALUES (:nom, :email, :mot_de_passe, :role)";
+        
+        $stmt = $pdo->prepare($sql);
+
+        //  Lie un paramètre à un nom de variable spécifique
+        $stmt->bindParam(':nom', $nom);
+        $stmt->bindParam(':email', $email);
+        $stmt->bindParam(':mot_de_passe', $mot_de_passe_hash);
+        $stmt->bindParam(':role', $role);
+
+        // Exécution de la requête
+        $stmt->execute();
+
+        echo "<p>Le bénévole a été ajouté avec succès.</p>";
+    } catch (PDOException $e) {
+        echo "<p>Erreur : " . $e->getMessage() . "</p>";
+    }
+}
+?>
             </form>
         </div>
     </div>
