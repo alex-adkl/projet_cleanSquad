@@ -70,30 +70,97 @@ require('menu.php');
         <?php endif; ?>
 
         <!-- Cartes d'informations -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 lg:grid-cols-4 gap-6 mb-8">
-            <!-- Nombre total de collectes -->
-            <div class="bg-white p-6 rounded-lg shadow-lg">
-                <h3 class="text-xl font-semibold text-amber-500 mb-3">Total des Collectes</h3>
-                <p class="text-3xl font-bold text-sky-700"><?= count($collectes) ?></p>
+<div class="grid grid-cols-3 gap-6 mb-8">
+    <!-- colonne Large -->
+    <div class="col-span-2 bg-white p-6 rounded-lg shadow-lg">
+        <h3 class="text-xl font-semibold text-amber-500 mb-3">Statistiques Globales</h3>
+
+        <div class="grid grid-cols-2 gap-6">
+            <!-- colonne infos -->
+            <div class="flex flex-col space-y-4">
+                <div>
+                    <h4 class="text-lg font-medium text-gray-700">Total des Collectes</h4>
+                    <p class="text-3xl font-bold text-sky-700"><?= count($collectes) ?></p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-medium text-gray-700">Total des déchets collectés</h4>
+                    <p class="text-3xl font-bold text-sky-700"><?= number_format((float)$totalDechets, 2, '.', '')?> kg</p>
+                </div>
             </div>
-             <!-- Nombre total de dechets collectés -->
-             <div class="bg-white p-6 rounded-lg shadow-lg">
-                <h3 class="text-xl font-semibold text-amber-500 mb-3">Total des déchêts collectés</h3>
-                <p class="text-3xl font-bold text-sky-700"><?= number_format((float)$totalDechets, 2, '.', '')?> kg</p>
-            </div>
-            <!-- Dernière collecte -->
-            <div class="bg-white p-6 rounded-lg shadow-lg">
-                <h3 class="text-xl font-semibold text-amber-500 mb-3">Dernière Collecte</h3>
-                <p class="text-lg text-gray-600"><?= htmlspecialchars($collectes[0]['lieu']) ?></p>
-                <p class="text-lg text-gray-600"><?= date('d/m/Y', strtotime($collectes[0]['date_collecte'])) ?></p>
-            </div>
-            <!-- Bénévole Responsable -->
-            <div class="bg-white p-6 rounded-lg shadow-lg">
-                <h3 class="text-xl font-semibold text-amber-500 mb-3">Bénévole Admin</h3>
-                <p class="text-lg text-gray-600"><?= $adminNom ?></p>
+
+            <!-- colonne graphe -->
+            <div class="flex justify-center">
+                <canvas id="myPolarChart" class="h-140 max-w-xl"></canvas>
             </div>
         </div>
 
+        <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                const ctx = document.getElementById('myPolarChart').getContext('2d');
+
+                // Données récupérées depuis PHP
+                const labels = ['Plastique', 'Verre', 'Métal', 'Organiques', 'Papier'];
+                const dataValues = [
+                    <?= array_sum(array_column($collectes, 'plastique')) ?>,
+                    <?= array_sum(array_column($collectes, 'verre')) ?>,
+                    <?= array_sum(array_column($collectes, 'metal')) ?>,
+                    <?= array_sum(array_column($collectes, 'organiques')) ?>,
+                    <?= array_sum(array_column($collectes, 'papier')) ?>
+                ];
+
+                Chart.register(ChartDataLabels);
+
+                new Chart(ctx, {
+                    type: 'polarArea',
+                    data: {
+                        
+                        datasets: [{
+                            data: dataValues,
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.6)',
+                                'rgba(54, 162, 235, 0.6)',
+                                'rgba(255, 206, 86, 0.6)',
+                                'rgba(75, 192, 192, 0.6)',
+                                'rgba(153, 102, 255, 0.6)'
+                            ]
+                        }],
+                        labels: labels,
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'right'
+                            },
+                            datalabels: {
+                                color: '#fff',
+                                font: {
+                                    weight: 'bold',
+                                    size: 14
+                                },
+                                formatter: (value, context) => {
+                                    return context.chart.data.labels[context.dataIndex];
+                                }
+                            }
+                        }
+                    }
+                });
+            });
+        </script>
+    </div>
+
+    <!-- Colonne Petite (Dernière Collecte et Bénévole Admin) -->
+    <div class="col-span-1 bg-white p-6 rounded-lg shadow-lg">
+        <h3 class="text-xl font-semibold text-amber-500 mb-3">Dernière Collecte</h3>
+        <p class="text-lg text-gray-600"><?= htmlspecialchars($collectes[0]['lieu']) ?></p>
+        <p class="text-lg text-gray-600"><?= date('d/m/Y', strtotime($collectes[0]['date_collecte'])) ?></p>
+        <br>
+        <h3 class="text-xl font-semibold text-amber-500 mb-3">Bénévole Admin</h3>
+        <p class="text-lg text-gray-600"><?= $adminNom ?></p>
+    </div>
+</div>
         <!-- Tableau des collectes -->
         <div class="overflow-hidden rounded-lg shadow-lg bg-white">
             <table class="w-full table-auto border-collapse">
@@ -138,7 +205,6 @@ require('menu.php');
         </div>
     </div>
 </div>
-
 
 </body>
 </html>

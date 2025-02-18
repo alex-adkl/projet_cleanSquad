@@ -25,7 +25,7 @@ require('menu.php');
     <div class="flex-1 p-8 overflow-y-auto">
         <h1 class="text-4xl font-bold text-sky-700 mb-6">Ajouter un Bénévole</h1>
 
-        <!-- Formulaire d'ajout -->
+        <!-- formulaire -->
         <div class="bg-white p-6 rounded-lg shadow-lg max-w-lg mx-auto">
             <form action="user_add.php" method="POST">
                 <div class="mb-4">
