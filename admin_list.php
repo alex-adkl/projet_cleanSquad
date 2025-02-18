@@ -1,3 +1,9 @@
+<?php
+require 'securite.php';
+require 'config.php'
+
+
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -29,7 +35,7 @@
 
         <div class="mt-6">
             <button onclick="logout()" class="w-full bg-red-600 hover:bg-red-700 text-white py-2 rounded-lg shadow-md">
-                Déconnexion
+            <a href="logout.php" > Déconnexion</a>
             </button>
         </div>
     </div>

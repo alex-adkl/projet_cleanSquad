@@ -1,7 +1,9 @@
 <?php
 
+require_once 'securite.php';
+
 include "config.php";
-include "hash_password.php";
+require_once "hash_password.php";
 
 // Si requete serveur = POST : Récupération des données du formulaire
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -59,7 +61,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             class="fas fa-cogs mr-3"></i> Mon compte</a></li>
         <div class="mt-6">
             <button onclick="logout()" class="w-full bg-red-600 hover:bg-red-700 text-white py-2 rounded-lg shadow-md">
-                Déconnexion
+            <a href="logout.php" > Déconnexion</a>
             </button>
         </div>
     </div>

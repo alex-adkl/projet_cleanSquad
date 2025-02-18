@@ -1,7 +1,7 @@
 <?php
-session_start(); // Démarrer la session
+session_start();
 require 'config.php';
-
+//include 'securite.php';
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $email = $_POST["email"];
     $password = $_POST["password"];

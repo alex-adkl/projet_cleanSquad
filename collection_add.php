@@ -1,4 +1,5 @@
 <?php
+include 'securite.php';
 require 'config.php';
 
 ini_set('display_errors', 1);
@@ -51,7 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         <div class="mt-6">
             <button onclick="logout()" class="w-full bg-red-600 hover:bg-red-700 text-white py-2 rounded-lg shadow-md">
-                Déconnexion
+            <a href="logout.php" > Déconnexion</a>
             </button>
         </div>
     </div>
@@ -102,13 +103,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 </div>
             </form>
         </div>
-        <div class="bg-white p-6 rounded-lg shadow-lg mt-6">
+         <!--<div class="bg-white p-6 rounded-lg shadow-lg mt-6">
             <form method="POST">
                 <label for="type_dechet">Type de déchet :</label>
                 <select name="type_dechet" id="type_dechet" required>
                     <option value="" disabled selected>Choisissez</option>
                     <!-- <option value="">--Choisissez--</option> -->
-                    <option value="plastique">plastique</option>
+                    <!--<option value="plastique">plastique</option>
                     <option value="verre">verre</option>
                     <option value="metal">métal</option>
                     <option value="organique">organique</option>
@@ -118,7 +119,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 <input type="number" id="quantite_kg" name="quantite_kg" placeholder="1.0" step="0.1" min="0" max="99" required />
                 <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded-lg">Ajouter</button>
             </form>
-        </div>
+        </div>-->
 
     </div>
 </div>

@@ -1,7 +1,8 @@
 <?php
 
+require_once  'securite.php';
 include "config.php";
-include "hash_password.php";
+require_once  "hash_password.php";
 
 // on verifie si la requete est de type POST et si le champ ID existe
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id'])) {
@@ -81,7 +82,7 @@ if (isset($_GET['id'])) {
                 <i class="fas fa-cogs mr-3"></i> Mon compte</a></li>
         <div class="mt-6">
             <button onclick="logout()" class="w-full bg-red-600 hover:bg-red-700 text-white py-2 rounded-lg shadow-md">
-                Déconnexion
+            <a href="logout.php" > Déconnexion</a>
             </button>
         </div>
     </div>
