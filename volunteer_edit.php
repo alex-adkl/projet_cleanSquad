@@ -65,30 +65,16 @@ if (isset($_GET['id'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Modifier un Bénévole</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
 </head>
 <body class="bg-gray-100 text-gray-900">
 
 <div class="flex h-screen">
-    <div class="bg-cyan-500 text-white w-64 p-6">
-        <h2 class="text-2xl font-bold mb-6">Dashboard</h2>
-        <li><a href="collection_list.php" class="flex items-center py-2 px-3 hover:bg-blue-800 rounded-lg">
-                <i class="fas fa-tachometer-alt mr-3"></i> Tableau de bord</a></li>
-        <li><a href="collection_add.php" class="flex items-center py-2 px-3 hover:bg-blue-800 rounded-lg">
-                <i class="fas fa-plus-circle mr-3"></i> Ajouter une collecte</a></li>
-        <li><a href="volunteer_list.php" class="flex items-center py-2 px-3 hover:bg-blue-800 rounded-lg">
-                <i class="fa-solid fa-list mr-3"></i> Liste des bénévoles</a></li>
-        <li><a href="my_account.php" class="flex items-center py-2 px-3 hover:bg-blue-800 rounded-lg">
-                <i class="fas fa-cogs mr-3"></i> Mon compte</a></li>
-        <div class="mt-6">
-            <button onclick="logout()" class="w-full bg-red-600 hover:bg-red-700 text-white py-2 rounded-lg shadow-md">
-            <a href="logout.php" > Déconnexion</a>
-            </button>
-        </div>
-    </div>
+<?php 
+require('menu.php');
+?>
 
     <div class="flex-1 p-8 overflow-y-auto">
-        <h1 class="text-4xl font-bold text-blue-800 mb-6">Modifier un compte Bénévole</h1>
+        <h1 class="text-4xl font-bold text-sky-700 mb-6">Modifier un compte Bénévole</h1>
 
         <div class="bg-white p-6 rounded-lg shadow-lg max-w-lg mx-auto">
             <form action="volunteer_edit.php" method="POST">
