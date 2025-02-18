@@ -1,4 +1,5 @@
 <?php
+include 'securite.php';
 include "config.php"; 
 
 // Vérifie si l'ID est bien passé et est un nombre

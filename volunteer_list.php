@@ -1,4 +1,6 @@
 <?php
+
+include 'securite.php';
     include "config.php";
 ?>
 

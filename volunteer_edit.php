@@ -1,7 +1,8 @@
 <?php
 
+require_once  'securite.php';
 include "config.php";
-include "hash_password.php";
+require_once  "hash_password.php";
 
 // on verifie si la requete est de type POST et si le champ ID existe
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id'])) {

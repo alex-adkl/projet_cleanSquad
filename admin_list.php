@@ -1,3 +1,9 @@
+<?php
+require 'securite.php';
+require 'config.php'
+
+
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>

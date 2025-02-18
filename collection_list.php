@@ -1,7 +1,7 @@
 <?php
+include 'securite.php';
+
 require 'config.php';
-
-
 try {
     $stmt = $pdo->query("
         SELECT c.id, c.date_collecte, c.lieu, b.nom AS benevole,

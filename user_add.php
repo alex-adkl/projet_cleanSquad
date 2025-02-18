@@ -1,10 +1,39 @@
 <?php
 
+require_once 'securite.php';
+
 include "config.php";
-include "hash_password.php";
+require_once "hash_password.php";
 
+// // Si requete serveur = POST : Récupération des données du formulaire
+// if ($_SERVER["REQUEST_METHOD"] == "POST") {
+//     $nom = $_POST['nom'];
+//     $email = $_POST['email'];
+//     $mot_de_passe_hash = hashPassword($_POST['mot_de_passe']);
+//     $role = $_POST['role'];
 
-?>
+//     try {
+//         // Préparer la requête d'insertion dans la table 
+//         $sql = "INSERT INTO benevoles (nom, email, mot_de_passe, role) 
+//                 VALUES (:nom, :email, :mot_de_passe, :role)";
+        
+//         $stmt = $pdo->prepare($sql);
+
+//         //  Lie un paramètre à un nom de variable spécifique
+//         $stmt->bindParam(':nom', $nom);
+//         $stmt->bindParam(':email', $email);
+//         $stmt->bindParam(':mot_de_passe', $mot_de_passe_hash);
+//         $stmt->bindParam(':role', $role);
+
+//         // Exécution de la requête
+//         $stmt->execute();
+
+//         echo "<p>Le bénévole a été ajouté avec succès.</p>";
+//     } catch (PDOException $e) {
+//         echo "<p>Erreur : " . $e->getMessage() . "</p>";
+//     }
+// }
+// ?>
 
 <!DOCTYPE html>
 <html lang="fr">

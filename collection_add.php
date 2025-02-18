@@ -1,4 +1,5 @@
 <?php
+include 'securite.php';
 require 'config.php';
 
 ini_set('display_errors', 1);
@@ -112,6 +113,24 @@ require('menu.php');
                 </div>
             </form>
         </div>
+         <!--<div class="bg-white p-6 rounded-lg shadow-lg mt-6">
+            <form method="POST">
+                <label for="type_dechet">Type de déchet :</label>
+                <select name="type_dechet" id="type_dechet" required>
+                    <option value="" disabled selected>Choisissez</option>
+                    <!-- <option value="">--Choisissez--</option> -->
+                    <!--<option value="plastique">plastique</option>
+                    <option value="verre">verre</option>
+                    <option value="metal">métal</option>
+                    <option value="organique">organique</option>
+                    <option value="papier">papier</option>
+                </select>
+                <label for="quantite_kg">Poids (kg) :</label>
+                <input type="number" id="quantite_kg" name="quantite_kg" placeholder="1.0" step="0.1" min="0" max="99" required />
+                <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded-lg">Ajouter</button>
+            </form>
+        </div>-->
+
     </div>
 </div>
 
