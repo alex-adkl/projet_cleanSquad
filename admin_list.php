@@ -7,10 +7,10 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100 text-gray-900">
-<div class="flex h-screen">
-<?php 
-require('menu.php');
-?>
+    <div class="flex h-screen">
+        <?php 
+        require('menu.php');
+        ?>
 
     <!-- Contenu principal -->
     <div class="flex-1 p-8 overflow-y-auto">
