@@ -37,7 +37,7 @@
 
     <div class="mt-6">
         <button onclick="logout()" class="w-full bg-amber-500 hover:bg-amber-700 text-white py-2 rounded-xl shadow-md">
-            Déconnexion
+        <a href="logout.php" > Déconnexion</a> 
         </button>
     </div>
 </div>
