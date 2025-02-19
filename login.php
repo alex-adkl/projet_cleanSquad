@@ -1,5 +1,5 @@
 <?php
-session_start();
+session_start(); //on démarre la session
 require 'config.php';
 
 

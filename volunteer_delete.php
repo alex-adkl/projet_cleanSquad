@@ -4,7 +4,7 @@ include "config.php";
 
 //vérifie si l'ID est bien passé et est un nombre
 if (isset($_GET['id']) && is_numeric($_GET['id'])) {
-    $id = intval($_GET['id']); // Convertie l'ID en entier
+    $id = intval($_GET['id']); // convertit l'ID en entier
 
     try { // garantit les suppressions, s'il y a une suppression qui echoue, aucun changement n'est appliqué
         

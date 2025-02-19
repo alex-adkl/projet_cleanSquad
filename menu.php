@@ -7,7 +7,7 @@
     </a>
     <br>
     
-    <!--ne pas afficher "Ajouter une collecte" si on est sur la page index.php-->
+    <!--ne pas afficher "Ajouter une collecte" si on est sur la page collection_add.php-->
     <?php if (basename($_SERVER['PHP_SELF']) !== 'collection_add.php'): ?>
         <a href="collection_add.php" class="flex items-center py-2 px-3 hover:bg-cyan-700 rounded-xl">
             <i class="fas fa-plus-circle mr-3"></i>Ajouter une collecte

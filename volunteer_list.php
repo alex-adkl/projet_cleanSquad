@@ -28,7 +28,7 @@ include "config.php";
                             <th class="py-3 px-4 text-left">Nom</th>
                             <th class="py-3 px-4 text-left">Email</th>
                             <th class="py-3 px-4 text-left">Rôle</th>
-                            <th class="py-3 px-4 text-left">Nombre total de déchêts collectés</th>
+                            <th class="py-3 px-4 text-left">Nombre total de déchets collectés</th>
                             <th class="py-3 px-4 text-left">Actions</th>
                         </tr>
                     </thead>

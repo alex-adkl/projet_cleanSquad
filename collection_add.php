@@ -22,13 +22,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 
     // on insère les déchets
-    if (!empty($_POST["type_dechet"]) && !empty($_POST["quantite_kg"])) {
-        $stmt_dechets = $pdo->prepare("INSERT INTO dechets_collectes (id_collecte, type_dechet, quantite_kg) VALUES (?, ?, ?)");
-        $id_collecte = $pdo->lastInsertId();
-        foreach ($_POST["type_dechet"] as $index => $type) {
+    if (!empty($_POST["type_dechet"]) && !empty($_POST["quantite_kg"])) { //si l'input est rempli
+        $stmt_dechets = $pdo->prepare("INSERT INTO dechets_collectes (id_collecte, type_dechet, quantite_kg) VALUES (?, ?, ?)"); //on prepare la requete
+        $id_collecte = $pdo->lastInsertId(); //on recup l'ID de la collecte
+        foreach ($_POST["type_dechet"] as $index => $type) {  //boucle foreach qui parcourt les types de dechets
+            //met les quantités de chaque type dans une variable $quantite
             $quantite = isset($_POST["quantite_kg"][$index]) && is_numeric($_POST["quantite_kg"][$index]) ? $_POST["quantite_kg"][$index] : 0;
-            if (!empty($type) && is_numeric($quantite)) {
-                $stmt_dechets->execute([$id_collecte, $type, $quantite]);
+            if (!empty($type) && is_numeric($quantite)) { //si la ligne du type de dechets n'est pas vide et que la quantité est numerique
+                $stmt_dechets->execute([$id_collecte, $type, $quantite]); //on execute
             }
         }
     }

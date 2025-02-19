@@ -68,10 +68,9 @@ if (isset($_GET['id'])) {
 <body class="bg-gray-100 text-gray-900" style="background: url('beach2.svg') no-repeat center center fixed; background-size: cover;">
 
 <div class="flex h-screen">
-<?php 
-require('menu.php');
-?>
-
+    <?php 
+    require('menu.php');
+    ?>
     <div class="flex-1 p-8 overflow-y-auto">
         <h1 class="text-4xl font-bold text-cyan-50 mb-6">Modifier un compte bénévole</h1>
 

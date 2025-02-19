@@ -25,9 +25,9 @@ try { //PDO::query() prépare et exécute une requête SQL en un seul appel de f
     $admin = $query->fetch(PDO::FETCH_ASSOC);
     $adminNom = $admin ? htmlspecialchars($admin['nom']) : 'Aucun administrateur trouvé';
 
-    $totalDechets = 0;
-    foreach ($collectes as $collecte) {
-        $totalDechets += $collecte['total'];
+    $totalDechets = 0;                          //total des dechets de collectes
+    foreach ($collectes as $collecte) {         // boucle dans $collectes
+        $totalDechets += $collecte['total'];    //on ajoute les totaux dans la variable $totalDechets
     }
 
 } catch (PDOException $e) {
@@ -45,7 +45,7 @@ error_reporting(E_ALL);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Liste des Collectes</title>
+    <title>Liste des collectes</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&family=Lora:wght@400;700&family=Montserrat:wght@300;400;700&family=Open+Sans:wght@300;400;700&family=Poppins:wght@300;400;700&family=Playfair+Display:wght@400;700&family=Raleway:wght@300;400;700&family=Nunito:wght@300;400;700&family=Merriweather:wght@300;400;700&family=Oswald:wght@300;400;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -88,7 +88,6 @@ error_reporting(E_ALL);
                         <canvas id="myPolarChart" class="h-140 max-w-xl"></canvas>
                     </div>
                 </div>
-
                 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
                 <script>
                     document.addEventListener("DOMContentLoaded", function() {
@@ -175,7 +174,7 @@ error_reporting(E_ALL);
                 </thead>
                 
                 <tbody class="divide-y divide-gray-300">
-                    <?php foreach ($collectes as $collecte) : ?>
+                    <?php foreach ($collectes as $collecte) : ?> 
                         <tr class="hover:bg-gray-100 transition duration-200">
                             <td class="py-3 px-4"><?= date('d/m/Y', strtotime($collecte['date_collecte'])) ?></td>
                             <td class="py-3 px-4"><?= htmlspecialchars($collecte['lieu']) ?></td>
