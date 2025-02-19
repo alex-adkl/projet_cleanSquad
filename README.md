@@ -18,6 +18,7 @@ Base de données : MySQL 9.1.0 (via XAMPP ou WAMP)
 Interface de gestion de la base de données : PhpMyAdmin 5.2.1
 
 Langages de programmation :
+
 - PHP
 - CSS
 - HTML
@@ -26,17 +27,19 @@ Langages de programmation :
 
 Prérequis:
 Avant de démarrer le projet en local, vous devez installer les logiciels suivants :
+
 - WAMP / XAMPP : pour faire tourner le serveur Apache et la base de données MySQL
 - PHP : pour exécuter le code serveur
 - PhpMyAdmin : pour gérer facilement la base de données MySQL
 
-Installation :
+Installation en local :
+
 1. Clonez ou téléchargez ce projet sur votre machine locale.
 2. Installez WAMP ou XAMPP si ce n’est pas déjà fait.
 3. Placez les fichiers du projet dans le répertoire www de WAMP/XAMPP.
 4. Créez une base de données MySQL appelée "gestion_collectes" avec PhpMyAdmin. Ensuite, importez le fichier gestion_collectes.sql pour générer les tables.
 5. Lancez Apache et MySQL via WAMP/XAMPP.
-6. Accédez à l'application via votre navigateur en allant à l'adresse http://localhost/projetCleanSquad/[.
+6. Accédez à l'application via votre navigateur en allant à l'adresse http://localhost/projetCleanSquad/.
 
 Ressources utiles:
 https://www.wampserver.com/

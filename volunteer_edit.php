@@ -1,5 +1,4 @@
 <?php
-
 require_once  'securite.php';
 include "config.php";
 require_once  "hash_password.php";
@@ -63,10 +62,10 @@ if (isset($_GET['id'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Modifier un Bénévole</title>
+    <title>Modifier un compte bénévole</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-100 text-gray-900">
+<body class="bg-gray-100 text-gray-900" style="background: url('beach2.svg') no-repeat center center fixed; background-size: cover;">
 
 <div class="flex h-screen">
 <?php 
@@ -74,7 +73,7 @@ require('menu.php');
 ?>
 
     <div class="flex-1 p-8 overflow-y-auto">
-        <h1 class="text-4xl font-bold text-sky-700 mb-6">Modifier un compte Bénévole</h1>
+        <h1 class="text-4xl font-bold text-cyan-50 mb-6">Modifier un compte bénévole</h1>
 
         <div class="bg-white p-6 rounded-lg shadow-lg max-w-lg mx-auto">
             <form action="volunteer_edit.php" method="POST">
@@ -95,7 +94,7 @@ require('menu.php');
                 </div>
 
                 <div class="mb-4">
-                    <label class="block text-gray-700 font-medium">Nouveau mot de passe (laisser vide pour ne pas changer)</label>
+                    <label class="block text-gray-700 font-medium">Nouveau mot de passe (laissez vide pour ne pas changer)</label>
                     <input type="password" name="mot_de_passe"
                            class="w-full mt-2 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
                 </div>
