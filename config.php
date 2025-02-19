@@ -1,8 +1,6 @@
 <?php
 declare(strict_types=1);
 
-//session_start();
-
 $host = 'localhost';
 $dbname = 'gestion_collectes';
 $username = 'CleanSquad';

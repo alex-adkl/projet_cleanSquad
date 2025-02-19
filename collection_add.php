@@ -21,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         die('Erreur lors de l\'insertion dans la base de données.');
     }
 
-    // Insertion des déchets
+    // on insère les déchets
     if (!empty($_POST["type_dechet"]) && !empty($_POST["quantite_kg"])) {
         $stmt_dechets = $pdo->prepare("INSERT INTO dechets_collectes (id_collecte, type_dechet, quantite_kg) VALUES (?, ?, ?)");
         $id_collecte = $pdo->lastInsertId();
@@ -32,8 +32,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             }
         }
     }
-
-    header("Location: collection_list.php");
+    //on redirige vers la page Liste des bénévoles
+    header("Location: index.php");
     exit;
 }
 ?>
@@ -46,7 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <title>Ajouter une collecte</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-100 text-gray-900">
+<body class="bg-gray-100 text-gray-900" style="background: url('beach2.svg') no-repeat center center fixed; background-size: cover;">
 
 <div class="flex h-screen">
 
@@ -57,7 +57,7 @@ require('menu.php');
     <!-- Contenu principal -->
     <div class="flex-1 p-8 overflow-y-auto">
         <!-- Titre -->
-        <h1 class="text-4xl font-bold text-sky-700 mb-6">Ajouter une collecte</h1>
+        <h1 class="text-4xl font-bold text-cyan-50 mb-6">Ajouter une collecte</h1>
 
         <!-- Formulaire -->
         <div class="bg-white p-6 rounded-lg shadow-lg">
@@ -78,10 +78,11 @@ require('menu.php');
 
                 <!-- Bénévole responsable -->
                 <div>
-                    <label class="block text-base font-medium text-gray-700">Bénévole Responsable :</label>
+                    <label class="block text-base font-medium text-gray-700">Bénévole responsable :</label>
                     <select name="benevole" required
-                            class="w-full p-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
+                        class="w-full p-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
                         <option value="">Sélectionner un bénévole</option>
+
                         <?php foreach ($benevoles as $benevole): ?>
                             <option value="<?= $benevole['id'] ?>" <?= $benevole['id'] ==  'selected' ?>>
                                 <?= htmlspecialchars($benevole['nom']) ?>
@@ -90,7 +91,7 @@ require('menu.php');
                     </select>
                 </div>  
                 
-                <h2 class="block text-base font-bold text-cyan-700">Déchêts à ajouter</h2>
+                <h2 class="block text-base font-bold text-cyan-700">Déchets à ajouter</h2>
                 <div id="dechets-container">
                     <?php
                     $types_dechets = ['plastique', 'verre', 'metal', 'organique', 'papier'];
@@ -106,33 +107,12 @@ require('menu.php');
 
                 <!-- Boutons -->
                 <div class="flex justify-end space-x-4">
-                <button href="collection_list.php" class="bg-gray-500 hover:bg-gray-700 text-white px-4 py-2 rounded-xl shadow focus:outline-none focus:ring-2 focus:ring-gray-700 transition duration-200">Annuler</button>
-                    <button type="submit" class="bg-cyan-500 hover:bg-cyan-700 text-white px-4 py-2 rounded-xl shadow focus:outline-none focus:ring-2 focus:ring-cyan-700 transition duration-200">
-                        Ajouter la collecte
-                    </button>
+                    <button href="index.php" class="bg-gray-500 hover:bg-gray-700 text-white px-4 py-2 rounded-xl shadow focus:outline-none focus:ring-2 focus:ring-gray-700 transition duration-200">Annuler</button>
+                    <button type="submit" class="bg-cyan-500 hover:bg-cyan-700 text-white px-4 py-2 rounded-xl shadow focus:outline-none focus:ring-2 focus:ring-cyan-700 transition duration-200">Ajouter la collecte</button>
                 </div>
             </form>
         </div>
-         <!--<div class="bg-white p-6 rounded-lg shadow-lg mt-6">
-            <form method="POST">
-                <label for="type_dechet">Type de déchet :</label>
-                <select name="type_dechet" id="type_dechet" required>
-                    <option value="" disabled selected>Choisissez</option>
-                    <!-- <option value="">--Choisissez--</option> -->
-                    <!--<option value="plastique">plastique</option>
-                    <option value="verre">verre</option>
-                    <option value="metal">métal</option>
-                    <option value="organique">organique</option>
-                    <option value="papier">papier</option>
-                </select>
-                <label for="quantite_kg">Poids (kg) :</label>
-                <input type="number" id="quantite_kg" name="quantite_kg" placeholder="1.0" step="0.1" min="0" max="99" required />
-                <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded-lg">Ajouter</button>
-            </form>
-        </div>-->
-
     </div>
 </div>
-
 </body>
 </html>
