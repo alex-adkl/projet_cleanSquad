@@ -39,7 +39,12 @@ Installation en local :
 3. Placez les fichiers du projet dans le répertoire www de WAMP/XAMPP.
 4. Créez une base de données MySQL appelée "gestion_collectes" avec PhpMyAdmin. Ensuite, importez le fichier gestion_collectes.sql pour générer les tables.
 5. Lancez Apache et MySQL via WAMP/XAMPP.
-6. Accédez à l'application via votre navigateur en allant à l'adresse http://localhost/projetCleanSquad/.
+6. Accédez à l'application via votre navigateur en allant à l'adresse http://localhost/projetCleanSquad/index.php.
+
+En ligne :
+Le projet a été déployé en ligne et accessible sur : http://cleansquad.rf.gd/
+
+Mise en ligne : Creation serveur + base de données sur infinityfree.com / Upload sur FileZilla / Interface PHP : MY ADMIN
 
 Ressources utiles:
 https://www.wampserver.com/
@@ -47,3 +52,8 @@ https://www.apachefriends.org/docs/
 https://www.php.net/docs.php
 https://www.phpmyadmin.net/docs/
 https://www.chartjs.org/
+
+Améliorations :
+
+- mot de passe oublié
+- debug Benevole Admin sur index.php

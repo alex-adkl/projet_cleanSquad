@@ -25,11 +25,14 @@ function updateSettings($pdo, $user){
         echo "mot de passe conforme";
             if($new_password == $confirm_password){
                 try {
+                    //on prépare la requête de mise à jour dans la table
                     $sql = "UPDATE benevoles
                     SET mot_de_passe = :new_password
                     WHERE email = :email";
 
                     $stmt = $pdo->prepare($sql);
+
+                    //on lie un paramètre à un nom de variable spécifique
                     $stmt->bindParam(':new_password', password_hash($new_password, PASSWORD_DEFAULT));
                     $stmt->bindParam(':email', $email);
                     $stmt->execute();
@@ -39,13 +42,13 @@ function updateSettings($pdo, $user){
                     exit; // après un header() on arrête l'exécution du script
 
                 } catch (PDOException $e) {
-                    var_dump($e->getMessage());die;
                     echo "<p>Erreur : " . $e->getMessage() . "</p>";
                 }
             }
         }
     }
 }
+
 updateSettings($pdo, $user);
 
 ?>

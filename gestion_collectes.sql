@@ -33,7 +33,7 @@ CREATE TABLE `benevoles` (
   `email` varchar(100) NOT NULL,
   `mot_de_passe` varchar(255) NOT NULL,
   `role` enum('admin','participant') NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Déchargement des données de la table `benevoles`
@@ -55,7 +55,7 @@ CREATE TABLE `collectes` (
   `date_collecte` date NOT NULL,
   `lieu` varchar(255) NOT NULL,
   `id_benevole` int DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Déchargement des données de la table `collectes`
@@ -83,7 +83,7 @@ CREATE TABLE `dechets_collectes` (
   `id_collecte` int DEFAULT NULL,
   `type_dechet` varchar(50) NOT NULL,
   `quantite_kg` float NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Déchargement des données de la table `dechets_collectes`

@@ -31,7 +31,7 @@ $dechets = $stmt_dechets->fetchAll();
 
 // on met a jour la collecte et les déchets
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    if (isset($_POST["date"], $_POST["lieu"], $_POST["benevole"])) {
+    if (isset($_POST["date"], $_POST["lieu"], $_POST["benevole"])) { //isset détermine si une variable est déclarée et est différente de null
         $date = $_POST["date"];
         $lieu = $_POST["lieu"];
         $benevole_id = $_POST["benevole"];
