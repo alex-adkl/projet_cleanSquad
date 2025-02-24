@@ -43,6 +43,8 @@ Installation en local :
 
 En ligne :
 Le projet a été déployé en ligne et accessible sur : http://cleansquad.rf.gd/
+mail : alex@example.fr 
+mot de passe : test2
 
 Mise en ligne : Creation serveur + base de données sur infinityfree.com / Upload sur FileZilla / Interface PHP : MY ADMIN
 
